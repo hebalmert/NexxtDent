@@ -1,0 +1,196 @@
+﻿@model NexxtDent.Models.TechnicalPay
+
+@{
+    ViewBag.Title = @Resources.Resource.TechnicalWork_IndexTitulo1;
+}
+
+<h2>@Resources.Resource.TechnicalWork_IndexTitulo1</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <div>
+            <h4>@Resources.Resource.TechnicalWork_IndexTitulo1</h4>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Reception.Paciente)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Reception.Paciente)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Technical.FullName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Technical.FullName)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Servicio)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Servicio)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Precio)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Precio)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Cantidad)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Cantidad)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Total)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Total)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Abono)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Abono)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Saldo)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Saldo)
+                </dd>
+            </dl>
+        </div>
+        <p>
+            @Html.ActionLink(@Resources.Resource.ButtonEdit, "Edit", new { id = Model.TechnicalPayId }, new { @class = "btn btn-primary" }) |
+            @Html.ActionLink(@Resources.Resource.ButtonBack, "Index", new { }, new { @class = "btn btn-success" }) |
+            @if (Model.Pagado == false)
+            {
+                @*@Html.ActionLink("Pagos", "AddPago", new { id = Model.CxCBillId, deuda = Model.Saldo }, new { @class = "btn btn-primary" })*@
+                @Html.ActionLink(@Resources.Resource.ButtonPagos, "AddPago", "TechnicalPays", new { id = Model.TechnicalPayId, deuda = Model.Saldo }, new { @class = "dialog-window btn btn-warning" })
+            }
+            |
+            @if (Model.Saldo == 0)
+            {
+                @Html.ActionLink(@Resources.Resource.ButtonTiketVenta, "PrintSell", "TechnicalPays", new { id = Model.TechnicalPayId }, new { @class = "btn btn-info" })
+                @*@Html.ActionLink("Ticket", "PrintSell", "CxCBills", new { id = Model.CxCBillId}, new { @class = "dialog-window btn btn-info" })*@
+            }
+        </p>
+    </div>
+    <div class="col-md-6">
+        <h4><strong>Trabajo Recepcion</strong></h4>
+        <hr />
+        @if (Model.TechnicalPayDetails.Count == 0)
+        {
+            <h5>No Hay Pagos Realizados</h5>
+        }
+        else
+        {
+            <table class="table">
+                <tr>
+                    <th>
+                        Trabajo
+                    </th>
+                    <th align="right">
+                        Precio
+                    </th>
+                    <th align="right">
+                        Cantidad
+                    </th>
+                    <th align="right">
+                        Total
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model.TechnicalPayDetails.ToList())
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+                        <td align="right">
+                            @Html.DisplayFor(modelItem => item.Deuda)
+                        </td>
+                        <td align="right">
+                            @Html.DisplayFor(modelItem => item.Abono)
+                        </td>
+                        <td align="right">
+                            @Html.DisplayFor(modelItem => item.Saldo)
+                        </td>
+                        @*<td>
+                            @if (Model.StateId == 1)
+                            {
+                                @Html.ActionLink(@Resources.Resource.ButtonDelete, "AddDelete", new { id = item.ReceptionWorkId }, new { @class = "btn btn-danger", onclick = "return confirm('Sure Continue?')" })
+                            }
+                        </td>*@
+                    </tr>
+                }
+                <tr>
+                    <td colspan="3" align="right">
+                        <strong>Total</strong>
+                    </td>
+                    <td align="right">
+                        @*<strong>@Html.DisplayFor(modelItem => Model)</strong>*@
+                    </td>
+                </tr>
+            </table>
+        }
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="AddPago" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h2 class="modal-title"></h2>
+            </div>
+            <div class="modal-body"><div class="te">Please wait...</div></div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+    $(document).ready(function () {
+        $("body").on("click", "a.dialog-window", null, function (e) {
+            e.preventDefault();
+            var $link = $(this);
+            var title = $link.text();
+            $('#AddPago .modal-title').html(title);
+            var url = $(this).attr('href');
+            if (url.indexOf('#') == 0) {
+                $('#AddPago').modal('show');
+            }
+            else {
+                $.get(url, function (data) {
+                    $('#AddPago .te').html(data);
+                    $('#AddPago').modal();
+                }).success(function () { $('input:text:visible:first').focus(); });
+
+            }
+        });
+    });
+    </script>
+}
+

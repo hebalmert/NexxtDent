@@ -1,0 +1,47 @@
+﻿@model NexxtDent.Models.GumColor
+
+@{
+    ViewBag.Title = @Resources.Resource.ViewDelete;
+}
+
+    <h2>@Resources.Resource.ViewDelete</h2>
+
+    <h3>@Resources.Resource.MsgDelete</h3>
+<div>
+    <h4>@Resources.Resource.GumColor_ViewIndex_Titulo1</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ColorEncia)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ColorEncia)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Detalles)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Detalles)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Activo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Activo)
+        </dd>
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value=@Resources.Resource.ButtonSave class="btn btn-primary" /> |
+            @Html.ActionLink(@Resources.Resource.ButtonBack, "Index", new { }, new { @class="btn btn-success"})
+        </div>
+    }
+</div>

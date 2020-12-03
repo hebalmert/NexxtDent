@@ -1,0 +1,34 @@
+﻿@model IEnumerable<NexxtDent.Models.TechnicalPorcentage>
+
+@{
+    ViewBag.Title = @Resources.Resource.TecnichalPorcentage_Titulo_Cobro_por_Porcentaje;
+}
+<p></p>
+
+    <h2>@Resources.Resource.TecnichalPorcentage_Titulo_Cobro_por_Porcentaje</h2>
+
+@*<p>
+    @Html.ActionLink("Create New", "Create")
+</p>*@
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CobraPorcentaje)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.CobraPorcentaje)
+    </td>
+    <td>
+        @Html.ActionLink(@Resources.Resource.ButtonEdit, "Edit", new { id = item.TechnicalPorcentageId }, new { @class = "btn btn-warning" }) |
+        @Html.ActionLink(@Resources.Resource.ButtonDetail, "Details", new { id = item.TechnicalPorcentageId }, new { @class = "btn btn-info" })
+        @*@Html.ActionLink(@Resources.Resource.ButtonDelete, "Delete", new { id=item.TaxId }, new { @class="btn btn-danger"})*@
+    </td>
+</tr>
+}
+
+</table>

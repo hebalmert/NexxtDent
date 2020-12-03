@@ -1,0 +1,58 @@
+﻿@model NexxtDent.Models.ReceptionLog
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ReceptionLog</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Company.Compania)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Company.Compania)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Reception.Paciente)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Reception.Paciente)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Estado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Estado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Detalle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Detalle)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ReceptionLogId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,194 @@
+﻿@*@model IEnumerable<NexxtDent.Models.Reception>*@
+
+@model PagedList.IPagedList<NexxtDent.Models.Reception>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = @Resources.Resource.Reception_ViewIndex_Titulo1;
+}
+
+@*<h2>@Resources.Resource.Reception_ViewIndex_Titulo1</h2>*@
+
+
+<p></p>
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-horizontal">
+            <p></p>
+            <div class="form-group">
+                <div class="col-md-12">
+                    <h2>@Resources.Resource.Reception_ViewIndex_Titulo1</h2>
+                    <button title=@Resources.Resource.ButtonNew class="btn btn-primary btn-sm" onclick="location.href =
+                     '@Url.Action("Create", "Receptions", new { })'">
+                        <span class="glyphicon glyphicon-plus"></span> @Resources.Resource.ButtonNew
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        @using (Html.BeginForm("Index", "Receptions"))
+        {
+            @Html.AntiForgeryToken()
+            <div class="row">
+                <p></p>
+                <div class="col-md-8 mb-2">
+                    <div class="form-horizontal">
+                        <h2>Busqueda Clientes</h2>
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <input type="text" name="txt_search" id="txt_search" class="form-control" placeholder="Buscar Clinicas" />
+                                <input type="hidden" id="item_list" name="clientid" /><br />
+                                <button type="submit" class="btn btn-primary btn-sm">
+                                    <i class="fa fa-search"></i>
+                                    @Resources.Resource.ButtonSearch
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Recepcion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Client.Cliente)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().DatePrueba)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().DateEntrega)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().State.Estado)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Recepcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Client.Cliente)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DatePrueba)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateEntrega)
+            </td>
+            <td>
+                @switch (item.StateId)
+                {
+                    case 1:
+                        <strong style="color : gray">@Html.DisplayFor(model => item.State.Estado)</strong>
+                        break;
+
+                    case 2:
+                        <strong style="color : green">@Html.DisplayFor(model => item.State.Estado)</strong>
+                        break;
+
+                    case 3:
+                        <strong style="color : green">@Html.DisplayFor(model => item.State.Estado)</strong>
+                        break;
+                    case 4:
+                        <strong style="color : green">@Html.DisplayFor(model => item.State.Estado)</strong>
+                        break;
+                    case 5:
+                        <strong style="color : blue">@Html.DisplayFor(model => item.State.Estado)</strong>
+                        break;
+                    case 6:
+                        <strong style="color : blue">@Html.DisplayFor(model => item.State.Estado)</strong>
+                        break;
+                    case 7:
+                        <strong style="color : red">@Html.DisplayFor(model => item.State.Estado)</strong>
+                        break;
+                    case 8:
+                        <strong style="color : green">@Html.DisplayFor(model => item.State.Estado)</strong>
+                        break;
+                    case 9:
+                        <strong style="color : red">@Html.DisplayFor(model => item.State.Estado)</strong>
+                        break;
+                }
+            </td>
+            <td>
+                @Html.ActionLink(@Resources.Resource.ButtonDetail, "Details", new { id = item.ReceptionId }, new { @class = "btn btn-info" })
+                @if (item.StateId == 2 || item.StateId == 3 || item.StateId == 4)
+                {
+                    @Html.ActionLink(@Resources.Resource.ButtonEdit, "Edit", new { id = item.ReceptionId }, new { @class = "btn btn-warning" })
+                }
+                @if (item.StateId == 1)
+                {
+                    @Html.ActionLink(@Resources.Resource.ButtonDelete, "Delete", new { id = item.ReceptionId }, new { @class = "btn btn-danger" })
+                }
+            </td>
+        </tr>
+    }
+
+</table>
+
+Página: @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber), de: @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Index", new
+{
+    page,
+    sortOrder =
+    ViewBag.CurrentSort,
+    currentFilter = ViewBag.CurrentFilter
+}))
+
+<link href="~/Content/JquerySearch/jquery-ui.css" rel="stylesheet" />
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script src="~/Content/JquerySearch/jquery-1.12.4.js"></script>
+    <script src="~/Content/JquerySearch/jquery-ui.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#txt_search").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: '/Receptions/Search/',
+                        data: "{ 'prefix': '" + request.term + "'}",
+                        dataType: "json",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return item;
+                            }))
+                        },
+                        error: function (response) {
+                            alert(response.responseText);
+                        },
+                        failure: function (response) {
+                            alert(response.responseText);
+                        }
+                    });
+                },
+                select: function (e, i) {
+                    $("#item_list").val(i.item.val);
+                },
+                minLength: 1
+            });
+
+        });
+    </script>
+
+}

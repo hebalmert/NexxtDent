@@ -1,0 +1,167 @@
+﻿@model NexxtDent.Models.TechnicalWork
+
+@{
+    ViewBag.Title = @Resources.Resource.ViewDetail;
+}
+
+    <h2>@Resources.Resource.ViewDetail</h2>
+
+
+<div class="row">
+    <div class="col-md-6">
+        <div>
+            <h4>@Resources.Resource.TechnicalWork_IndexTitulo1</h4>
+            <hr />
+            <dl class="dl-horizontal">
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Reception.Recepcion)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Reception.Recepcion)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Reception.Client.Cliente)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Reception.Client.Cliente)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Reception.Paciente)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Reception.Paciente)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Technical.FullName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Technical.FullName)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Servicio)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Servicio)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Cantidad)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Cantidad)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.State.Estado)
+                </dt>
+
+                <dd>
+                    @switch (Model.StateId)
+                    {
+                        case 1:
+                            <strong style="color : gray">@Html.DisplayFor(model => Model.State.Estado)</strong>
+                            break;
+
+                        case 2:
+                            <strong style="color : green">@Html.DisplayFor(model => Model.State.Estado)</strong>
+                            break;
+
+                        case 3:
+                            <strong style="color : green">@Html.DisplayFor(model => Model.State.Estado)</strong>
+                            break;
+                        case 4:
+                            <strong style="color : green">@Html.DisplayFor(model => Model.State.Estado)</strong>
+                            break;
+                        case 5:
+                            <strong style="color : blue">@Html.DisplayFor(model => Model.State.Estado)</strong>
+                            break;
+                        case 6:
+                            <strong style="color : blue">@Html.DisplayFor(model => Model.State.Estado)</strong>
+                            break;
+                        case 7:
+                            <strong style="color : red">@Html.DisplayFor(model => Model.State.Estado)</strong>
+                            break;
+                        case 8:
+                            <strong style="color : green">@Html.DisplayFor(model => Model.State.Estado)</strong>
+                            break;
+                    }
+                </dd>
+
+            </dl>
+        </div>
+        <p>
+            @*@Html.ActionLink("Edit", "Edit", new { id = Model.TechnicalWorkId }) |*@
+            @Html.ActionLink(@Resources.Resource.ButtonBack, "Index", new { }, new { @class = "btn btn-success" }) |
+            @if (Model.StateId == 8 || Model.StateId == 3 || Model.StateId == 4)
+            {
+                @Html.ActionLink(@Resources.Resource.TechnicalWork_ButtonComment, "AddComment", new { id = Model.TechnicalWorkId }, new { @class = "btn btn-info" })
+            }
+        </p>
+    </div>
+    <div class="col-md-6">
+        <h4><strong>Trabajo Recepcion</strong></h4>
+        <hr />
+        @if (Model.TechnicalWorkDetails.Count == 0)
+        {
+            <h5>No Hay Comentarios al Trabajo</h5>
+        }
+        else
+        {
+            <table class="table">
+                <tr>
+                    <th>
+                        Date
+                    </th>
+                    <th>
+                        Detalle
+                    </th>
+                    <th align="right">
+                        Estado
+                    </th>
+                </tr>
+
+                @foreach (var item in Model.TechnicalWorkDetails.ToList())
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Detalle)
+                        </td>
+                        <td align="right">
+                            @switch (item.StateTechnicalId)
+                            {
+                                case 1:
+                                    <strong style="color : green">@Html.DisplayFor(model => item.StateTechnical.EstadoTecnico)</strong>
+                                    break;
+
+                                case 2:
+                                    <strong style="color : green">@Html.DisplayFor(model => item.StateTechnical.EstadoTecnico)</strong>
+                                    break;
+
+                                case 3:
+                                    <strong style="color : green">@Html.DisplayFor(model => item.StateTechnical.EstadoTecnico)</strong>
+                                    break;
+                                case 4:
+                                    <strong style="color : blue">@Html.DisplayFor(model => item.StateTechnical.EstadoTecnico)</strong>
+                                    break;
+                            }
+                        </td>
+                    </tr>
+                }
+            </table>
+        }
+    </div>
+</div>

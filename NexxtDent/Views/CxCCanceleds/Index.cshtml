@@ -1,0 +1,81 @@
+﻿@model IEnumerable<NexxtDent.Models.CxCCanceled>
+
+@{
+    ViewBag.Title = @Resources.Resource.CxC_View_IndexTitulo;
+}
+
+    <h2>@Resources.Resource.CxC_View_IndexTitulo</h2>
+
+@*<p>
+    @Html.ActionLink("Create New", "Create")
+</p>*@
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CxCBill.NotaCobro)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Client.Cliente)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Reception.Paciente)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Sell.NFactura)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NotaCobro)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Total)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Abono)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Saldo)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.CxCBill.NotaCobro)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Client.Cliente)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Reception.Paciente)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Sell.NFactura)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Date)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.NotaCobro)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Total)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Abono)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Saldo)
+    </td>
+    <td>
+        @*@Html.ActionLink("Edit", "Edit", new { id=item.CxCCanceledId }) |*@
+        @*@Html.ActionLink(@Resources.Resource.ButtonDetail, "Details", new { id = item.CxCCanceledId })*@
+        @*@Html.ActionLink("Delete", "Delete", new { id=item.CxCCanceledId })*@
+    </td>
+</tr>
+}
+
+</table>

@@ -1,0 +1,269 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="Keywords" content="Laboratorio Dental, Laboratorios Dentales, Software Laboratorios Dentales, Control Laboratorios Dentales">
+    <meta name="Description" content="Software para la Administracion de Laboratorios Dentales, controla la Recepcion, asiganacion a Tecnicos y despachos, ademas de controlar la Cuentas por Cobrar">
+    <meta name="Robots" content="all">
+
+    <link rel="icon" href="~/Content/Imagen/SiteLogo.png" type="image/png" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+
+
+    <title>@ViewBag.Title - NexxtPlanet Lab</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+        @Html.ActionLink("NexxtDent", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+
+                <li class="nav-item active">
+                    @Html.ActionLink(@Resources.Resource.MenuContact, "Contact", "Home", new { }, new { @class = "nav-link" })
+                </li>
+                
+                @if (User.IsInRole("Admin"))
+                {
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Administrador
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            @Html.ActionLink("Compañia", "Index", "Companies", new { }, new { @class = "dropdown-item" })
+                            @Html.ActionLink("Usuarios", "Index", "Users", new { }, new { @class = "dropdown-item" })
+                            <div class="dropdown-divider"></div>
+                            @Html.ActionLink("Level Price", "Index", "LevelPrices", new { }, new { @class = "dropdown-item" })
+                            @Html.ActionLink("Estados Trabajos", "Index", "States", new { }, new { @class = "dropdown-item" })
+                            @Html.ActionLink("Estados Tecnicos", "Index", "StateTechnicals", new { }, new { @class = "dropdown-item" })
+                        </div>
+                    </li>
+                }
+
+                @if (User.IsInRole("User"))
+                {
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            @Resources.Resource.MenuArchivo_Archivo
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            @Html.ActionLink(@Resources.Resource.MenuArchivo_Ciudad, "Index", "Cities", new { }, new { @class = "dropdown-item" })
+                            @Html.ActionLink(@Resources.Resource.MenuArchivo_Zona, "Index", "Zones", new { }, new { @class = "dropdown-item" })
+                            @Html.ActionLink(@Resources.Resource.MenuArchivo_EstacionTrabajo, "Index", "WorkStations", new { }, new { @class = "dropdown-item" })
+                            <div class="dropdown-divider"></div>
+                            @Html.ActionLink(@Resources.Resource.MenuArchivo_Tecnicos, "Index", "Technicals", new { }, new { @class = "dropdown-item" })
+                            @Html.ActionLink(@Resources.Resource.MenuArchivo_CategoriaServicio, "Index", "ServiceCategories", new { }, new { @class = "dropdown-item" })
+                            @Html.ActionLink(@Resources.Resource.MenuArchivo_Servicio, "Index", "Services", new { }, new { @class = "dropdown-item" })
+                            <div class="dropdown-divider"></div>
+                            @Html.ActionLink(@Resources.Resource.MenuArchivo_Clinicas, "Index", "Clients", new { }, new { @class = "dropdown-item" })
+                            @Html.ActionLink(@Resources.Resource.MenuArchivo_CategoriaTrabajos, "Index", "WorkCategories", new { }, new { @class = "dropdown-item" })
+                            @Html.ActionLink(@Resources.Resource.MenuArchivo_Trabajos, "Index", "Works", new { }, new { @class = "dropdown-item" })
+                        </div>
+                    </li>
+                }
+
+                @if (User.IsInRole("User") | User.IsInRole("Technical"))
+                {
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            @Resources.Resource.MenuOperacion_Operations
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            @if (User.IsInRole("User"))
+                            {
+                                @Html.ActionLink(@Resources.Resource.MenuOperation_Recepcion, "Index", "Receptions", new { }, new { @class = "dropdown-item" })
+                                @Html.ActionLink(@Resources.Resource.MenuOperation_Asignar, "Index", "ReceptionAssigns", new { }, new { @class = "dropdown-item" })
+                            }
+                            @Html.ActionLink(@Resources.Resource.MenuOpration_Trabajos, "Index", "TechnicalWorks", new { }, new { @class = "dropdown-item" })
+                            @if (User.IsInRole("User"))
+                            {
+                                @Html.ActionLink(@Resources.Resource.MenuOperation_Despachos, "Index", "Deliveries", new { }, new { @class = "dropdown-item" })
+                            }
+                        </div>
+                    </li>
+                }
+
+                @if (User.IsInRole("User"))
+                {
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            @Resources.Resource.MenuAdmin_Admin
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            @Html.ActionLink(@Resources.Resource.MenuAdmin_CuentasxCobrar, "Index", "CxCBills", new { }, new { @class = "dropdown-item" })
+                            @Html.ActionLink(@Resources.Resource.MenuAdmin_CuentasxCobrarAnulado, "Index", "CxCCanceleds", new { }, new { @class = "dropdown-item" })
+                            <div class="dropdown-divider"></div>
+                            @Html.ActionLink(@Resources.Resource.MenuAdmin_Egresos, "Index", "Outcomes", new { }, new { @class = "dropdown-item" })
+                            @Html.ActionLink(@Resources.Resource.MenuAdmin_Ingresos, "Index", "Incomes", new { }, new { @class = "dropdown-item" })
+                            <div class="dropdown-divider"></div>
+                            @Html.ActionLink(@Resources.Resource.MenuAdmin_PagoTecnicos, "Index", "TechnicalPays", new { }, new { @class = "dropdown-item" })
+                        </div>
+                    </li>
+                }
+
+                @if (User.IsInRole("User"))
+                {
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            @Resources.Resource.MenuSystem_System
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            @Html.ActionLink(@Resources.Resource.MenuSystem_Consecutivo, "Index", "Registers", new { }, new { @class = "dropdown-item" })
+                            @Html.ActionLink(@Resources.Resource.MenuSystem_DocumentType, "Index", "Identifications", new { }, new { @class = "dropdown-item" })
+                            @Html.ActionLink(@Resources.Resource.MenuSystem_TextoEncabezado, "Index", "HeadTexts", new { }, new { @class = "dropdown-item" })
+                            <div class="dropdown-divider"></div>
+                            @Html.ActionLink(@Resources.Resource.MenuSystem_Impuesto, "Index", "Taxes", new { }, new { @class = "dropdown-item" })
+                            @Html.ActionLink(@Resources.Resource.MenuSystem_TechicalPorcentaje, "Index", "TechnicalPorcentages", new { }, new { @class = "dropdown-item" })
+                            <div class="dropdown-divider"></div>
+                            @Html.ActionLink(@Resources.Resource.MenuSystem_ColorDiente, "Index", "ToothColors", new { }, new { @class = "dropdown-item" })
+                            @Html.ActionLink(@Resources.Resource.MenuSystem_ColorEncia, "Index", "GumColors", new { }, new { @class = "dropdown-item" })
+                        </div>
+                    </li>
+                }
+
+                <li class="nav-item active">
+                    @Html.Partial("_LoginPartial")
+                </li>
+            </ul>
+        </div>
+    </nav>
+    @*<div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @Html.ActionLink("InfoDent", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+
+                        @if (User.Identity.IsAuthenticated == false)
+                        {
+                            <li>@Html.ActionLink(@Resources.Resource.MenuHome, "Index", "Home")</li>
+                            <li>@Html.ActionLink(@Resources.Resource.MenuAbout, "About", "Home")</li>
+                            <li>@Html.ActionLink(@Resources.Resource.MenuContact, "Contact", "Home")</li>
+                        }
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Administrador<b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li>@Html.ActionLink("Compañias", "Index", "Companies")</li>
+                                    <li>@Html.ActionLink("Usuarios", "Index", "Users")</li>
+                                </ul>
+                            </li>
+                        }
+
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Datos<b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li>@Html.ActionLink("Estados Generales", "Index", "States")</li>
+                                    <li>@Html.ActionLink("Estados Tecnicos", "Index", "StateTechnicals")</li>
+                                    <li>@Html.ActionLink("Nivel Precio", "Index", "LevelPrices")</li>
+                                </ul>
+                            </li>
+                        }
+
+                        @if (User.IsInRole("User"))
+                        {
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">@Resources.Resource.MenuArchivo_Archivo<b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li>@Html.ActionLink(@Resources.Resource.MenuArchivo_Ciudad, "Index", "Cities")</li>
+                                    <li>@Html.ActionLink(@Resources.Resource.MenuArchivo_Zona, "Index", "Zones")</li>
+                                    <li>@Html.ActionLink(@Resources.Resource.MenuArchivo_EstacionTrabajo, "Index", "WorkStations")</li>
+                                    <li><hr noshade="noshade" /></li>
+                                    <li>@Html.ActionLink(@Resources.Resource.MenuArchivo_Tecnicos, "Index", "Technicals")</li>
+                                    <li>@Html.ActionLink(@Resources.Resource.MenuArchivo_CategoriaServicio, "Index", "ServiceCategories")</li>
+                                    <li>@Html.ActionLink(@Resources.Resource.MenuArchivo_Servicio, "Index", "Services")</li>
+                                    <li><hr noshade="noshade" /></li>
+                                    <li>@Html.ActionLink(@Resources.Resource.MenuArchivo_Clinicas, "Index", "Clients")</li>
+                                    <li>@Html.ActionLink(@Resources.Resource.MenuArchivo_CategoriaTrabajos, "Index", "WorkCategories")</li>
+                                    <li>@Html.ActionLink(@Resources.Resource.MenuArchivo_Trabajos, "Index", "Works")</li>
+                                </ul>
+                            </li>
+                        }
+
+                        @if (User.IsInRole("User") | User.IsInRole("Technical"))
+                        {
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">@Resources.Resource.MenuOperacion_Operations<b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    @if (User.IsInRole("User"))
+                                    {
+                                        <li>@Html.ActionLink(@Resources.Resource.MenuOperation_Recepcion, "Index", "Receptions")</li>
+                                        <li>@Html.ActionLink(@Resources.Resource.MenuOperation_Asignar, "Index", "ReceptionAssigns")</li>
+                                    }
+                                    <li>@Html.ActionLink(@Resources.Resource.MenuOpration_Trabajos, "Index", "TechnicalWorks")</li>
+                                    @if (User.IsInRole("User"))
+                                    {
+                                        <li>@Html.ActionLink(@Resources.Resource.MenuOperation_Despachos, "Index", "Deliveries")</li>
+                                    }
+                                </ul>
+                            </li>
+                        }
+
+                        @if (User.IsInRole("User"))
+                        {
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">@Resources.Resource.MenuAdmin_Admin<b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li>@Html.ActionLink(@Resources.Resource.MenuAdmin_CuentasxCobrar, "Index", "CxCBills")</li>
+                                    <li>@Html.ActionLink(@Resources.Resource.MenuAdmin_CuentasxCobrarAnulado, "Index", "CxCCanceleds")</li>
+                                    <li><hr noshade="noshade" /></li>
+                                    <li>@Html.ActionLink(@Resources.Resource.MenuAdmin_Egresos, "Index", "Outcomes")</li>
+                                    <li>@Html.ActionLink(@Resources.Resource.MenuAdmin_Ingresos, "Index", "Incomes")</li>
+                                    <li><hr noshade="noshade" /></li>
+                                    <li>@Html.ActionLink(@Resources.Resource.MenuAdmin_PagoTecnicos, "Index", "TechnicalPays")</li>
+                                </ul>
+                            </li>
+                        }
+
+                        @if (User.IsInRole("User"))
+                        {
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">@Resources.Resource.MenuSystem_System<b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li>@Html.ActionLink(@Resources.Resource.MenuSystem_Consecutivo, "Index", "Registers")</li>
+                                    <li>@Html.ActionLink(@Resources.Resource.MenuSystem_DocumentType, "Index", "Identifications")</li>
+                                    <li>@Html.ActionLink(@Resources.Resource.MenuSystem_TextoEncabezado, "Index", "HeadTexts")</li>
+                                    <li><hr noshade="noshade" /></li>
+                                    <li>@Html.ActionLink(@Resources.Resource.MenuSystem_Impuesto, "Index", "Taxes")</li>
+                                    <li>@Html.ActionLink(@Resources.Resource.MenuSystem_TechicalPorcentaje, "Index", "TechnicalPorcentages")</li>
+                                    <li><hr noshade="noshade" /></li>
+                                    <li>@Html.ActionLink(@Resources.Resource.MenuSystem_ColorDiente, "Index", "ToothColors")</li>
+                                    <li>@Html.ActionLink(@Resources.Resource.MenuSystem_ColorEncia, "Index", "GumColors")</li>
+                                </ul>
+                            </li>
+                        }
+                    </ul>
+                    @Html.Partial("_LoginPartial")
+                </div>
+            </div>
+        </div>*@
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - NexxtPlanet Infolab</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

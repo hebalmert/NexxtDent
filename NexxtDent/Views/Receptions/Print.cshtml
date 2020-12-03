@@ -1,0 +1,122 @@
+﻿@model NexxtDent.Models.Reception
+
+@{
+    ViewBag.Title = @Resources.Resource.ViewDetail;
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <table class="table table-borderless">
+            <tr>
+                <td> </td>
+                <td width="150">
+                    @if (Model != null && !string.IsNullOrEmpty(Model.Company.Logo))
+                    {
+                        <img src="@Url.Content(Model.Company.Logo)" alt="Image" style="width:150px;height:150px;max-width: 150%; height: auto;" />
+                    }
+                </td>
+                <th>
+                    <h5>@Model.Company.Compania</h5>
+                    <h7>@Model.Client.Identification.TipoDocumento:@Model.Company.Rif</h7>
+                </th>
+                <td> </td>
+                <td> </td>
+                <td>
+                    <h6>@Model.HeadText.TextoEncabezado</h6>
+                </td>
+            <tr />
+        </table>
+    </div>
+    @*<div class="col-md-6">
+        <table class="table table-borderless">
+            <tr>
+                <th align="center">
+                    <h7>@Model.Company.HeadTexts()</h7>
+                </th>
+            </tr>
+            <tr>
+                <th align="center">
+                    <h2>Solicitud Soporte Tecnico</h2>
+                </th>
+            </tr>
+        </table>
+    </div>*@
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div>
+            <table class="table table-borderless">
+                <tr>
+                    <td>
+                        <h6>@Html.LabelFor(model => model.Recepcion)</h6>
+                    </td>
+                    <td>
+                        <h6>@Html.EditorFor(model => model.Recepcion, new { htmlAttributes = new { @class = "form-control form-control-sm" } })</h6>
+                    </td>
+                    <td>
+                        <h6>@Html.LabelFor(model => model.Date)</h6>
+                    </td>
+                    <td>
+                        <h6>@Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control form-control-sm" } })</h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h6>@Html.LabelFor(model => model.Client.Cliente)</h6>
+                    </td>
+                    <td>
+                        <h6>@Html.EditorFor(model => model.Client.Cliente, new { htmlAttributes = new { @class = "form-control form-control-sm" } })</h6>
+                    </td>
+                    <td>
+                        <h6>@Html.LabelFor(model => model.Paciente)</h6>
+                    </td>
+                    <td>
+                        <h6>@Html.EditorFor(model => model.Paciente, new { htmlAttributes = new { @class = "form-control form-control-sm" } })</h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h6>@Html.LabelFor(model => model.ToothColor.ColorDiente)</h6>
+                    </td>
+                    <td>
+                        <h6>@Html.EditorFor(model => model.ToothColor.ColorDiente, new { htmlAttributes = new { @class = "form-control form-control-sm" } })</h6>
+                    </td>
+                    <td>
+                        <h6>@Html.LabelFor(model => model.GumColor.ColorEncia)</h6>
+                    </td>
+                    <td>
+                        <h6>@Html.EditorFor(model => model.GumColor.ColorEncia, new { htmlAttributes = new { @class = "form-control form-control-sm" } })</h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h6>@Html.LabelFor(model => model.DatePrueba)</h6>
+                    </td>
+                    <td>
+                        <h6>@Html.EditorFor(model => model.DatePrueba, new { htmlAttributes = new { @class = "form-control form-control-sm" } })</h6>
+                    </td>
+                    <td>
+                        <h6>@Html.LabelFor(model => model.DateEntrega)</h6>
+                    </td>
+                    <td>
+                        <h6>@Html.EditorFor(model => model.DateEntrega, new { htmlAttributes = new { @class = "form-control form-control-sm" } })</h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h6>@Html.LabelFor(model => model.Detalles)</h6>
+                    </td>
+                    <td colspan="3" height="100">
+                        <h6>@Html.EditorFor(model => model.Detalles, new { htmlAttributes = new { @class = "form-control form-control-sm" } })</h6>
+                    </td>
+
+                </tr>
+            </table>
+        </div>
+        <p>
+            @Html.ActionLink(@Resources.Resource.ButtonBack, "Index", new { }, new { @class = "btn btn-success" }) |
+            @Html.ActionLink(@Resources.Resource.ButtonPrint, "Print", new { }, new { @class = "btn btn-primary", onclick = "window.print();" })
+        </p>
+    </div>
+</div>

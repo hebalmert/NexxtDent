@@ -1,0 +1,223 @@
+﻿@*@model IEnumerable<NexxtSpi.Models.CxCBill>*@
+
+@model PagedList.IPagedList<NexxtDent.Models.CxCBill>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = @Resources.Resource.CxC_ViewIndex_CuentasXcobrar;
+}
+@*<p>
+    <h2>@Resources.Resource.CxC_ViewIndex_CuentasXcobrar</h2>
+</p>*@
+@*<div class="row">
+    <div class="col-md-6">
+        <p>
+            @Html.ActionLink(@Resources.Resource.ButtonReport, "PrintCxCReport", "CxCBills", new { }, new { @class = "dialog-window btn btn-warning" })
+        </p>
+    </div>
+    <div class="col-md-6">
+        <div>
+            @using (Html.BeginForm())
+            {
+                <p>
+                    <input type="submit" value=@Resources.Resource.ButtonSearch class="btn btn-primary" />
+                </p>
+                <p>
+                    @Html.TextBox("SearchString", null, htmlAttributes: new { @class = "form-control" })
+                </p>
+            }
+        </div>
+    </div>
+</div>*@
+<p></p>
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-horizontal">
+            <p></p>
+            <div class="form-group">
+                <div class="col-md-12">
+                    <h2>@Resources.Resource.CxC_ViewIndex_CuentasXcobrar</h2>
+                    @*<button title=@Resources.Resource.ButtonNew class="btn btn-primary btn-sm" onclick="location.href =
+                     '@Url.Action("Create", "Clients", new { })'">
+                        <span class="glyphicon glyphicon-plus"></span> @Resources.Resource.ButtonNew
+                    </button>*@
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        @using (Html.BeginForm("Index", "CxCBills"))
+        {
+            @Html.AntiForgeryToken()
+            <div class="row">
+                <p></p>
+                <div class="col-md-8 mb-2">
+                    <div class="form-horizontal">
+                        <h2>Busqueda Clientes</h2>
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <input type="text" name="txt_search" id="txt_search" class="form-control" placeholder="Buscar Clinicas" />
+                                <input type="hidden" id="item_list" name="clientid" /><br />
+                                <button type="submit" class="btn btn-primary btn-sm">
+                                    <i class="fa fa-search"></i>
+                                    @Resources.Resource.ButtonSearch
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Sell.NotaCobro)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Client.Cliente)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Reception.Recepcion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Total)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Abono)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Saldo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Pagado)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sell.NotaCobro)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Client.Cliente)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Reception.Recepcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Total)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Abono)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Saldo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pagado)
+            </td>
+            <td>
+                @*@Html.ActionLink("Edit", "Edit", new { id=item.CxCBillId }) |*@
+                @Html.ActionLink(@Resources.Resource.ButtonDetail, "Details", new { id = item.CxCBillId }, new { @class = "btn btn-primary" }) |
+                @Html.ActionLink(@Resources.Resource.ButtonAnular, "Anular", new { id = item.CxCBillId }, new { @class = "btn btn-danger", onclick = "return confirm('Sure Continue?')" })
+                @*@Html.ActionLink("Delete", "Delete", new { id=item.CxCBillId })*@
+            </td>
+        </tr>
+    }
+
+</table>
+
+Página: @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber), de: @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Index", new
+{
+    page,
+    sortOrder =
+    ViewBag.CurrentSort,
+    currentFilter = ViewBag.CurrentFilter
+}))
+
+<div class="modal fade" id="PrintCxCReport" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h2 class="modal-title"></h2>
+            </div>
+            <div class="modal-body"><div class="te">Please wait...</div></div>
+        </div>
+    </div>
+</div>
+
+<link href="~/Content/JquerySearch/jquery-ui.css" rel="stylesheet" />
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script src="~/Content/JquerySearch/jquery-1.12.4.js"></script>
+    <script src="~/Content/JquerySearch/jquery-ui.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#txt_search").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: '/CxCBills/Search/',
+                        data: "{ 'prefix': '" + request.term + "'}",
+                        dataType: "json",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return item;
+                            }))
+                        },
+                        error: function (response) {
+                            alert(response.responseText);
+                        },
+                        failure: function (response) {
+                            alert(response.responseText);
+                        }
+                    });
+                },
+                select: function (e, i) {
+                    $("#item_list").val(i.item.val);
+                },
+                minLength: 1
+            });
+
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("body").on("click", "a.dialog-window", null, function (e) {
+                e.preventDefault();
+                var $link = $(this);
+                var title = $link.text();
+                $('#PrintCxCReport .modal-title').html(title);
+                var url = $(this).attr('href');
+                if (url.indexOf('#') == 0) {
+                    $('#PrintCxCReport').modal('show');
+                }
+                else {
+                    $.get(url, function (data) {
+                        $('#PrintCxCReport .te').html(data);
+                        $('#PrintCxCReport').modal();
+                    }).success(function () { $('input:text:visible:first').focus(); });
+
+                }
+            });
+        });
+    </script>
+}

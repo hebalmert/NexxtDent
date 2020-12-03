@@ -1,0 +1,105 @@
+﻿@model NexxtDent.Models.TechnicalPay
+
+@{
+    ViewBag.Title = @Resources.Resource.ButtonTiketVenta;
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <div>
+            <table class="table table-borderless">
+                <tr>
+                    <td width="150">
+                        @if (Model != null && !string.IsNullOrEmpty(Model.Company.Logo))
+                        {
+                            <img src="@Url.Content(Model.Company.Logo)" alt="Image" style="width:100px;height:100px;max-width: 100%; height: auto;" />
+                        }
+                    </td>
+                    <th class="text-sm-center">
+                        <h5>@Model.Company.Compania</h5>
+                        <h7>@Model.Reception.Client.Identification.TipoDocumento:@Model.Company.Rif</h7>
+                    </th>
+                <tr />
+            </table>
+            @*<table class="table table-borderless">
+                <tr class="text-center">
+                    <th>
+                        <h6>@Model.HeadText.TextoEncabezado</h6>
+                    </th>
+                <tr />
+            </table>*@
+            <hr />
+            <h8>Comprobante de Pago</h8>
+            <p>
+                @Html.DisplayNameFor(model => model.NFactura):<h8>@Html.DisplayFor(model => model.NFactura)</h8>
+            </p>
+            <table class="table table-borderless">
+                <tr>
+                    <th>
+                        <h6>@Html.DisplayNameFor(model => model.Reception.Recepcion)</h6>
+                    </th>
+                    <td>
+                        <h6>@Html.DisplayFor(model => model.Reception.Recepcion)</h6>
+                    </td>
+                    <th>
+                        <h6>@Html.DisplayNameFor(model => model.DatePagado)</h6>
+                    </th>
+                    <td>
+                        <h6>@Html.DisplayFor(model => model.DatePagado)</h6>
+                    </td>
+                </tr>
+                <tr>
+                </tr>
+                <tr>
+                    <th>
+                        <h6>@Html.DisplayNameFor(model => model.Technical.FullName):</h6>
+                    </th>
+
+                    <td>
+                        <h6>@Html.DisplayFor(model => model.Technical.FullName)</h6>
+                    </td>
+                    <th>
+                        <h6>@Html.DisplayNameFor(model => model.Reception.Client.Cliente):</h6>
+                    </th>
+
+                    <td>
+                        <h6>@Html.DisplayFor(model => model.Reception.Client.Cliente)</h6>
+                    </td>
+                </tr>
+            </table>
+            <table class="table table-borderless">
+                <tr>
+                    <th>
+                        <h6>@Html.DisplayNameFor(model => model.Servicio):</h6>
+                    </th>
+
+                    <td>
+                        <h6>@Html.DisplayFor(model => model.Servicio)</h6>
+                    </td>
+                </tr>
+            </table>
+            <table class="table table-borderless">
+                <tr>
+                    <th>
+                        <h6>@Html.DisplayNameFor(model => model.Total):</h6>
+                    </th>
+                    <td align="left">
+                        <h6>@Html.DisplayFor(model => model.Total)</h6>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <h6>@Html.DisplayNameFor(model => model.Saldo):</h6>
+                    </th>
+                    <td>
+                        <h6>@Html.DisplayFor(model => model.Saldo)</h6>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<p>
+    @Html.ActionLink(@Resources.Resource.ButtonBack, "Index", new { }, new { @class = "btn btn-success" }) |
+    @Html.ActionLink(@Resources.Resource.ButtonPrint, "PrintSell", new { }, new { @class = "btn btn-primary", onclick = "window.print();" })
+</p>

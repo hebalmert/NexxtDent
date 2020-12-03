@@ -1,0 +1,136 @@
+﻿@model IEnumerable<NexxtDent.Models.Work>
+
+@{
+    ViewBag.Title = @Resources.Resource.Work_VIewIndex_Titulo1;
+}
+
+<p></p>
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-horizontal">
+            <p></p>
+            <div class="form-group">
+                <div class="col-md-12">
+                    <h2>@Resources.Resource.Work_VIewIndex_Titulo1</h2>
+                    <button title=@Resources.Resource.ButtonNew class="btn btn-primary btn-sm" onclick="location.href =
+                         '@Url.Action("Create", "Works", new { })'">
+                            <span class="glyphicon glyphicon-plus"></span> @Resources.Resource.ButtonNew
+                        </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        @using (Html.BeginForm("Index", "Works"))
+        {
+            @Html.AntiForgeryToken()
+            <div class="row">
+                <p></p>
+                <div class="col-md-8 mb-2">
+                    <div class="form-horizontal">
+                        <h2>Busqueda Clientes</h2>
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <input type="text" name="txt_search" id="txt_search" class="form-control" placeholder="Buscar Clinicas" />
+                                <input type="hidden" id="item_list" name="workid" /><br />
+                                <button type="submit" class="btn btn-primary btn-sm">
+                                    <i class="fa fa-search"></i>
+                                    @Resources.Resource.ButtonSearch
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Trabajo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tax.Impuesto)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Precio1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Precio2)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Precio3)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Trabajo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tax.Impuesto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Precio1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Precio2)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Precio3)
+            </td>
+            <td>
+                @Html.ActionLink(@Resources.Resource.ButtonEdit, "Edit", new { id = item.WorkId }, new { @class = "btn btn-warning" }) |
+                @Html.ActionLink(@Resources.Resource.ButtonDetail, "Details", new { id = item.WorkId }, new { @class = "btn btn-info" }) |
+                @Html.ActionLink(@Resources.Resource.ButtonDelete, "Delete", new { id = item.WorkId }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+    }
+
+</table>
+
+<link href="~/Content/JquerySearch/jquery-ui.css" rel="stylesheet" />
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script src="~/Content/JquerySearch/jquery-1.12.4.js"></script>
+    <script src="~/Content/JquerySearch/jquery-ui.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#txt_search").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: '/Works/Search/',
+                        data: "{ 'prefix': '" + request.term + "'}",
+                        dataType: "json",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return item;
+                            }))
+                        },
+                        error: function (response) {
+                            alert(response.responseText);
+                        },
+                        failure: function (response) {
+                            alert(response.responseText);
+                        }
+                    });
+                },
+                select: function (e, i) {
+                    $("#item_list").val(i.item.val);
+                },
+                minLength: 1
+            });
+
+        });
+    </script>
+}

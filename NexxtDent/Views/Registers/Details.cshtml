@@ -1,0 +1,58 @@
+﻿@model NexxtDent.Models.Register
+
+@{
+    ViewBag.Title = @Resources.Resource.ButtonDetail;
+}
+
+    <h2>@Resources.Resource.ButtonDetail</h2>
+
+<div>
+    <h4>@Resources.Resource.Register_ViewIndex_Titulo1</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Recepcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Recepcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PagoTecnicos)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PagoTecnicos)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NotaCobro)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NotaCobro)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Factura)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Factura)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Egresos)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Egresos)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink(@Resources.Resource.ButtonEdit, "Edit", new { id = Model.RegisterId }, new { @class="btn btn-primary"}) |
+    @Html.ActionLink(@Resources.Resource.ButtonBack, "Index", new { }, new { @class="btn btn-success"})
+</p>

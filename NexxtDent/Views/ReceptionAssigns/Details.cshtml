@@ -1,0 +1,219 @@
+﻿@model NexxtDent.Models.ReceptionAssign
+
+@{
+    ViewBag.Title = @Resources.Resource.ViewDetail;
+}
+
+<h2>@Resources.Resource.ViewDetail</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <div>
+            <h4>@Resources.Resource.ReceptionAssign_ViewIndex_Titulo1</h4>
+            <hr />
+            <dl class="dl-horizontal">
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Recepcion)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Recepcion)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Date)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Date)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Client.Cliente)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Client.Cliente)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Reception.Paciente)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Reception.Paciente)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Total)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Total)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.State.Estado)
+                </dt>
+
+                <dd>
+                    @switch (Model.StateId)
+                    {
+                        case 1:
+                            <strong style="color : gray">@Html.DisplayFor(model => model.State.Estado)</strong>
+                            break;
+
+                        case 2:
+                            <strong style="color : green">@Html.DisplayFor(model => model.State.Estado)</strong>
+                            break;
+
+                        case 3:
+                            <strong style="color : green">@Html.DisplayFor(model => model.State.Estado)</strong>
+                            break;
+
+                        case 4:
+                            <strong style="color : green">@Html.DisplayFor(model => model.State.Estado)</strong>
+                            break;
+
+                        case 5:
+                            <strong style="color : blue">@Html.DisplayFor(model => model.State.Estado)</strong>
+                            break;
+
+                        case 6:
+                            <strong style="color : blue">@Html.DisplayFor(model => model.State.Estado)</strong>
+                            break;
+
+                        case 7:
+                            <strong style="color : red">@Html.DisplayFor(model => model.State.Estado)</strong>
+                            break;
+
+                        case 8:
+                            <strong style="color : green">@Html.DisplayFor(model => model.State.Estado)</strong>
+                            break;
+                    }
+                </dd>
+
+            </dl>
+        </div>
+        <p>
+            @*@Html.ActionLink(@Resources.Resource.ButtonEdit, "Edit", new { id = Model.ReceptionAssignId }, new { @class="btn btn-primary"}) |*@
+            @Html.ActionLink(@Resources.Resource.ButtonBack, "Index", new { }, new { @class = "btn btn-success" }) |
+            @if (Model.StateId == 2)
+            {
+                @Html.ActionLink(@Resources.Resource.ButtonTechnical, "AddTechnical", new { id = Model.ReceptionAssignId }, new { @class = "dialog-window btn btn-info" })
+            }
+        </p>
+    </div>
+    <div class="col-md-6">
+        <h4><strong>Trabajo Recepcion</strong></h4>
+        <hr />
+        @if (Model.ReceptionAssignDetails.Count == 0)
+        {
+            <h5>No Hay Trabajos Asignados</h5>
+        }
+        else
+        {
+            <table class="table">
+                <tr>
+                    <th>
+                        Tecnico
+                    </th>
+                    <th>
+                        Servicio
+                    </th>
+                    <th align="right">
+                        Precio
+                    </th>
+                    <th align="right">
+                        Cantidad
+                    </th>
+                    <th align="right">
+                        Total
+                    </th>
+                </tr>
+
+                @foreach (var item in Model.ReceptionAssignDetails.ToList())
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Technical.FullName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Service.Servicio)
+                        </td>
+                        <td align="right">
+                            @Html.DisplayFor(modelItem => item.Precio)
+                        </td>
+                        <td align="right">
+                            @Html.DisplayFor(modelItem => item.Cantidad)
+                        </td>
+                        <td align="right">
+                            @Html.DisplayFor(modelItem => item.Total)
+                        </td>
+                        <td>
+                            @if (Model.StateId == 2)
+                            {
+                                @Html.ActionLink(@Resources.Resource.ButtonDelete, "AddDelete", new { id = item.ReceptionAssignDetailId }, new { @class = "btn btn-danger", onclick = "return confirm('Sure Continue?')" })
+                            }
+                        </td>
+                    </tr>
+                }
+                <tr>
+                    <td></td>
+                    <td colspan="3" align="right">
+                        <strong>Total</strong>
+                    </td>
+                    <td align="right">
+                        <strong>@Html.DisplayFor(modelItem => Model.TotalValue)</strong>
+                    </td>
+                </tr>
+            </table>
+        }
+
+        <div style="margin-top:10px">
+            @if (Model.StateId == 2 && Model.ReceptionAssignDetails.Count != 0)
+            {
+                @Html.ActionLink(@Resources.Resource.ButtonActivar, "Activate", new { id = Model.ReceptionAssignId }, new { @class = "btn btn-warning btn-lg btn-block", onclick = "return confirm('Sure Continue?')" })
+            }
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="AddTechnical" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h2 class="modal-title"></h2>
+            </div>
+            <div class="modal-body"><div class="te">Please wait...</div></div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("body").on("click", "a.dialog-window", null, function (e) {
+                e.preventDefault();
+                var $link = $(this);
+                var title = $link.text();
+                $('#AddTechnical .modal-title').html(title);
+                var url = $(this).attr('href');
+                if (url.indexOf('#') == 0) {
+                    $('#AddTechnical').modal('show');
+                }
+                else {
+                    $.get(url, function (data) {
+                        $('#AddTechnical .te').html(data);
+                        $('#AddTechnical').modal();
+                    }).success(function () { $('input:text:visible:first').focus(); });
+
+                }
+            });
+        });
+    </script>
+}

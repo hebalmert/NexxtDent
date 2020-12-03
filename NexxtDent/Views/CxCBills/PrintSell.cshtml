@@ -1,0 +1,167 @@
+﻿@model NexxtDent.Models.Sell
+
+@{
+    ViewBag.Title = @Resources.Resource.ButtonTiketVenta;
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <div>
+            <table class="table table-borderless">
+                <tr>
+                    <td width="150">
+                        @if (Model != null && !string.IsNullOrEmpty(Model.Company.Logo))
+                        {
+                            <img src="@Url.Content(Model.Company.Logo)" alt="Image" style="width:100px;height:100px;max-width: 100%; height: auto;" />
+                        }
+                    </td>
+                    <th class="text-sm-center">
+                        <h5>@Model.Company.Compania</h5>
+                        <h7>@Model.TipoDocumento:@Model.Company.Rif</h7>
+                    </th>
+                <tr />
+            </table>
+            <table class="table table-borderless">
+                <tr class="text-center">
+                    <th>
+                        <h6>@Model.HeadText.TextoEncabezado</h6>
+                    </th>
+                <tr />
+            </table>
+            <hr />
+            <h8>Comprobante de Pago</h8>
+            <hr />
+            <table class="table table-borderless">
+                <tr>
+                    <th>
+                        <h6>@Html.DisplayNameFor(model => model.NotaCobro)</h6>
+                    </th>
+                    <td>
+                        <h6>@Html.DisplayFor(model => model.NotaCobro)</h6>
+                    </td>
+                    <th>
+                        <h6>@Html.DisplayNameFor(model => model.Date)</h6>
+                    </th>
+                    <td>
+                        <h6>@Html.DisplayFor(model => model.Date)</h6>
+                    </td>
+                </tr>
+                <tr>
+                </tr>
+                <tr>
+                    <th>
+                        <h6>@Html.DisplayNameFor(model => model.Recepcion):</h6>
+                    </th>
+
+                    <td>
+                        <h6>@Html.DisplayFor(model => model.Recepcion)</h6>
+                    </td>
+                    <th>
+                        <h6>@Html.DisplayFor(model => model.TipoDocumento):</h6>
+                    </th>
+
+                    <td>
+                        <h6>@Html.DisplayFor(model => model.IdentificationNumber)</h6>
+                    </td>
+                </tr>
+            </table>
+            <table class="table table-borderless">
+                <tr>
+                    <th>
+                        <h6>@Html.DisplayNameFor(model => model.Cliente):</h6>
+                    </th>
+
+                    <td>
+                        <h6>@Html.DisplayFor(model => model.Cliente)</h6>
+                    </td>
+                </tr>
+            </table>
+            <table class="table table-borderless">
+                <tr>
+                    <th>
+                        <h6>@Html.DisplayNameFor(model => model.Address):</h6>
+                    </th>
+                    <td align="left">
+                        <h6>@Html.DisplayFor(model => model.Address)</h6>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <h6>@Html.DisplayNameFor(model => model.Phone):</h6>
+                    </th>
+                    <td>
+                        <h6>@Html.DisplayFor(model => model.Phone)</h6>
+                    </td>
+                </tr>
+            </table>
+
+            <table class="table table">
+                @if (Model.SellDetails.Count != 0)
+                {
+                    <tr>
+                        <th>
+                            Concepto
+                        </th>
+                        <th align="center">
+                            Cant.
+                        </th>
+                        <th align="right">
+                            Unit.
+                        </th>
+                        <th align="right">
+                            Total
+                        </th>
+                    </tr>
+                    foreach (var item in Model.SellDetails)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(model => item.Concepto)
+                            </td>
+                            <td align="center">
+                                @Html.DisplayFor(model => item.Cantidad)
+                            </td>
+                            <td align="right">
+                                @Html.DisplayFor(model => item.Unitario)
+                            </td>
+                            <td align="right">
+                                @Html.DisplayFor(model => item.Total)
+                            </td>
+                        </tr>
+                    }
+                }
+            </table>
+            <hr />
+            <table class="table table-borderless" align="right">
+                <tr class="text-right">
+                    <th align="right">
+                        @Html.DisplayNameFor(model => model.SubTotal)
+                    </th>
+                    <th align="right">
+                        @Html.DisplayFor(model => model.SubTotal)
+                    </th>
+                </tr>
+                <tr class="text-right">
+                    <th align="right">
+                        @Html.DisplayNameFor(model => model.Iva)
+                    </th>
+                    <th align="right">
+                        @Html.DisplayFor(model => model.Iva)
+                    </th>
+                </tr>
+                <tr class="text-right">
+                    <th align="right">
+                        @Html.DisplayNameFor(model => model.Total)
+                    </th>
+                    <th align="right">
+                        @Html.DisplayFor(model => model.Total)
+                    </th>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<p>
+    @Html.ActionLink(@Resources.Resource.ButtonBack, "Index", new { }, new { @class = "btn btn-success" }) |
+    @Html.ActionLink(@Resources.Resource.ButtonPrint, "PrintSell", new { }, new { @class = "btn btn-primary", onclick = "window.print();" })
+</p>

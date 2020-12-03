@@ -1,0 +1,93 @@
+﻿@model NexxtDent.Models.TechnicalPayDetail
+
+@{
+    ViewBag.Title = @Resources.Resource.CxC_View_Payments;
+}
+
+<h2>@Resources.Resource.CxC_View_Payments</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.CompanyId)
+        @Html.HiddenFor(model => model.TechnicalPayId)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Date, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        -----------------------------------------------
+        <div class="form-group">
+            @Html.LabelFor(model => model.ModoPago, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                Efectivo
+                @Html.RadioButtonFor(model => model.ModoPago, @Resources.Resource.ModoPago_Efectivo)
+                Tranferencia
+                @Html.RadioButtonFor(model => model.ModoPago, @Resources.Resource.ModoPago_Transferencia)
+                Cheque
+                @Html.RadioButtonFor(model => model.ModoPago, @Resources.Resource.ModoPago_Cheque)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Detalle, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Detalle, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Detalle, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Deuda, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Deuda, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.Deuda, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Abono, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Abono, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Abono, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Saldo, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Saldo, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.Saldo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value=@Resources.Resource.ButtonSave class="btn btn-primary" /> |
+                @Html.ActionLink(@Resources.Resource.ButtonBack, "Details", new { id = Model.TechnicalPayId }, new { @class = "btn btn-success" })
+            </div>
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+    $("#Abono").on("input", function () {
+        var val1 = parseInt($('#Deuda').val());
+        var val2 = parseInt($('#Abono').val());
+
+        if (!isNaN(val1) && !isNaN(val2))
+            $('#Saldo').val(val1 - val2)
+            $('#Deuda').val(val1);
+    });
+</script>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

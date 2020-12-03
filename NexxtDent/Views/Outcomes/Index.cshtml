@@ -1,0 +1,127 @@
+﻿@*@model IEnumerable<NexxtDent.Models.Outcome>*@
+
+@model PagedList.IPagedList<NexxtDent.Models.Outcome>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = @Resources.Resource.Outcome_IndexView_Titulo1;
+}
+
+<h2>@Resources.Resource.Outcome_IndexView_Titulo1</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <p>
+            @Html.ActionLink(@Resources.Resource.ButtonNew, "Create", new { }, new { @class = "btn btn-primary" }) |
+            @Html.ActionLink(@Resources.Resource.ButtonReport, "PrintOutComeReport", "Outcomes", new { }, new { @class = "dialog-window btn btn-warning" })
+        </p>
+    </div>
+    <div class="col-md-6">
+        <div>
+            @using (Html.BeginForm())
+            {
+                <p>
+                    <input type="submit" value=@Resources.Resource.ButtonSearch class="btn btn-primary" />
+                </p>
+                <p>
+                    @Html.TextBox("SearchString", null, htmlAttributes: new { @class = "form-control" })
+                </p>
+            }
+        </div>
+    </div>
+</div>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Egreso)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Beneficiario)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Detalle)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().TotalValue)
+        </th>
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Date)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Egreso)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Beneficiario)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Detalle)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.TotalValue)
+    </td>
+    <td>
+        @Html.ActionLink(@Resources.Resource.ButtonEdit, "Edit", new { id = item.OutcomeId }, new { @class = "btn btn-warning" }) |
+        @Html.ActionLink(@Resources.Resource.ButtonDetail, "Details", new { id = item.OutcomeId }, new { @class = "btn btn-info" }) |
+        @Html.ActionLink(@Resources.Resource.ButtonDelete, "Delete", new { id = item.OutcomeId }, new { @class = "btn btn-danger" })
+    </td>
+</tr>
+    }
+
+</table>
+
+<div class="modal fade" id="PrintOutComeReport" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h2 class="modal-title"></h2>
+            </div>
+            <div class="modal-body"><div class="te">Please wait...</div></div>
+        </div>
+    </div>
+</div>
+
+Página: @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber), de: @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Index", new
+{
+    page,
+    sortOrder =
+    ViewBag.CurrentSort,
+    currentFilter = ViewBag.CurrentFilter
+}))
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("body").on("click", "a.dialog-window", null, function (e) {
+                e.preventDefault();
+                var $link = $(this);
+                var title = $link.text();
+                $('#PrintOutComeReport .modal-title').html(title);
+                var url = $(this).attr('href');
+                if (url.indexOf('#') == 0) {
+                    $('#PrintOutComeReport').modal('show');
+                }
+                else {
+                    $.get(url, function (data) {
+                        $('#PrintOutComeReport .te').html(data);
+                        $('#PrintOutComeReport').modal();
+                    }).success(function () { $('input:text:visible:first').focus(); });
+
+                }
+            });
+        });
+    </script>
+}

@@ -1,0 +1,123 @@
+﻿@*@model IEnumerable<NexxtSpi.Models.CxCBill>*@
+
+@model PagedList.IPagedList<NexxtDent.Models.CxCBill>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = @Resources.Resource.CxC_ViewIndex_CuentasXcobrar;
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <p>
+            <h2>@Resources.Resource.CxC_ViewIndex_CuentasXcobrar</h2>
+        </p>
+        <p>
+            @Html.ActionLink(@Resources.Resource.ButtonBack, "Index", new { }, new { @class = "btn btn-success" })
+        </p>
+    </div>
+    <div class="col-md-6">
+
+    </div>
+</div>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Sell.NotaCobro)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Client.Cliente)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Reception.ReceptionId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Total)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Abono)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Saldo)
+        </th>
+        <th>
+
+        </th>
+    </tr>
+
+    @{
+        decimal TotalTotal = 0.0M;
+        decimal AbonoTotal = 0;
+        decimal SaldoTotal = 0;
+        int registros = 0;
+    }
+
+    @foreach (var item in Model)
+    {
+
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sell.NotaCobro)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Client.Cliente)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Reception.Recepcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Total)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Abono)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Saldo)
+            </td>
+            @{
+                TotalTotal += item.Total;
+                AbonoTotal += item.Abono;
+                SaldoTotal += item.Saldo;
+                registros += +1;
+            }
+        </tr>
+    }
+    <tr>
+    </tr>
+    <tr>
+        <td align="center">
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+            <strong>Totales</strong>
+        </td>
+        <td align="right">
+            Registros: @registros
+        </td>
+        <td align="center">
+            Facturas: @TotalTotal
+        </td>
+        <td align="right">
+            Abonos: @AbonoTotal
+        </td>
+        <td align="right">
+            Saldo: @SaldoTotal
+        </td>
+    </tr>
+</table>
+
+Página: @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber), de: @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Index", new
+{
+    page,
+    sortOrder =
+    ViewBag.CurrentSort,
+    currentFilter = ViewBag.CurrentFilter
+}))

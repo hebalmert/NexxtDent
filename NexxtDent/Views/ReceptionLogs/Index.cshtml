@@ -1,0 +1,57 @@
+﻿@model IEnumerable<NexxtDent.Models.ReceptionLog>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Company.Compania)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Reception.Paciente)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Estado)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Detalle)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Company.Compania)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Reception.Paciente)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Date)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Estado)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Detalle)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ReceptionLogId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ReceptionLogId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ReceptionLogId })
+        </td>
+    </tr>
+}
+
+</table>

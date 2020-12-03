@@ -1,0 +1,45 @@
+﻿@model IEnumerable<NexxtDent.Models.GumColor>
+
+@{
+    ViewBag.Title = @Resources.Resource.GumColor_ViewIndex_Titulo1;
+}
+
+    <h2>@Resources.Resource.GumColor_ViewIndex_Titulo1</h2>
+
+<p>
+    @Html.ActionLink(@Resources.Resource.ButtonNew, "Create", new { }, new { @class="btn btn-primary"})
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ColorEncia)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Detalles)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Activo)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.ColorEncia)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Detalles)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Activo)
+    </td>
+    <td>
+        @Html.ActionLink(@Resources.Resource.ButtonEdit, "Edit", new { id = item.GumColorId }, new { @class = "btn btn-warning" }) |
+        @Html.ActionLink(@Resources.Resource.ButtonDetail, "Details", new { id = item.GumColorId }, new { @class = "btn btn-info" }) |
+        @Html.ActionLink(@Resources.Resource.ButtonDelete, "Delete", new { id = item.GumColorId }, new { @class = "btn btn-danger" })
+    </td>
+</tr>
+}
+
+</table>

@@ -1,0 +1,226 @@
+﻿@model NexxtDent.Models.CxCBill
+
+@{
+    ViewBag.Title = @Resources.Resource.CxC_View_Payments;
+}
+
+<h2>@Resources.Resource.CxC_View_Payments</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="row">
+                    <h4>@Resources.Resource.CxC_ViewIndex_CuentasXcobrar</h4>
+                    <hr />
+                    <table class="table table-borderless">
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Client.Cliente)
+                            </th>
+
+                            <td>
+                                @Html.DisplayFor(model => model.Client.Cliente)
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Reception.Recepcion)
+                            </th>
+
+                            <td>
+                                @Html.DisplayFor(model => model.Reception.Recepcion)
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Sell.NotaCobro)
+                            </th>
+
+                            <td>
+                                @Html.DisplayFor(model => model.Sell.NotaCobro)
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Date)
+                            </th>
+
+                            <td>
+                                @Html.DisplayFor(model => model.Date)
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Total)
+                            </th>
+
+                            <td>
+                                @Html.DisplayFor(model => model.Total)
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Abono)
+                            </th>
+
+                            <td>
+                                @Html.DisplayFor(model => model.Abono)
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Saldo)
+                            </th>
+
+                            <td>
+                                @Html.DisplayFor(model => model.Saldo)
+                            </td>
+                        </tr>
+                        @if (Model.Pagado == true)
+                        {
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Pagado)
+                                </th>
+
+                                <td>
+                                    @Html.DisplayFor(model => model.Pagado)
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.DatePagado)
+                                </th>
+
+                                <td>
+                                    @Html.DisplayFor(model => model.DatePagado)
+                                </td>
+                            </tr>
+                        }
+                    </table>
+        </div>
+        <p>
+            @Html.ActionLink(@Resources.Resource.ButtonBack, "Index", new { }, new { @class = "btn btn-success" }) |
+            @if (Model.Pagado == false)
+            {
+                @*@Html.ActionLink("Pagos", "AddPago", new { id = Model.CxCBillId, deuda = Model.Saldo }, new { @class = "btn btn-primary" })*@
+                @Html.ActionLink(@Resources.Resource.ButtonPagos, "AddPago", "CxCBills", new { id = Model.CxCBillId, deuda = Model.Saldo }, new { @class = "dialog-window btn btn-warning" })
+            }
+            @if (Model.Saldo == 0)
+            {
+                @Html.ActionLink(@Resources.Resource.ButtonTiketVenta, "PrintSell", "CxCBills", new { id = Model.CxCBillId }, new { @class = "btn btn-info" })
+                @*@Html.ActionLink("Ticket", "PrintSell", "CxCBills", new { id = Model.CxCBillId}, new { @class = "dialog-window btn btn-info" })*@
+            }
+            |
+            @if (Model.Sell.Impresa == false && Model.Saldo == 0)
+            {
+                @*@Html.ActionLink("Pagos", "AddPago", new { id = Model.CxCBillId, deuda = Model.Saldo }, new { @class = "btn btn-primary" })*@
+                @Html.ActionLink(@Resources.Resource.ButtonFactura, "PrintFactSell", "CxCBills", new { id = Model.CxCBillId }, new { @class = "btn btn-info" })
+            }
+        </p>
+    </div>
+    <div class="col-md-6">
+        <h4><strong>Cuentas por Cobrar</strong></h4>
+        <hr />
+        @if (Model.CxCBillDetails.Count == 0)
+        {
+            <h5>No Hay Pagos Realizados</h5>
+        }
+        else
+        {
+            <table class="table">
+                <tr>
+                    <th>
+                        Fecha
+                    </th>
+                    <th align="right">
+                        Deuda
+                    </th>
+                    <th align="right">
+                        Abono
+                    </th>
+                    <th align="right">
+                        Saldo
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model.CxCBillDetails.ToList())
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+                        <td align="right">
+                            @Html.DisplayFor(modelItem => item.Deuda)
+                        </td>
+                        <td align="right">
+                            @Html.DisplayFor(modelItem => item.Abono)
+                        </td>
+                        <td align="right">
+                            @Html.DisplayFor(modelItem => item.Saldo)
+                        </td>
+                        @*<td>
+                            @if (Model.StateId == 1)
+                            {
+                                @Html.ActionLink(@Resources.Resource.ButtonDelete, "AddDelete", new { id = item.ReceptionWorkId }, new { @class = "btn btn-danger", onclick = "return confirm('Sure Continue?')" })
+                            }
+                        </td>*@
+                    </tr>
+                }
+                <tr>
+                    <td colspan="3" align="right">
+                        <strong>Total</strong>
+                    </td>
+                    <td align="right">
+                        <strong>@Html.DisplayFor(modelItem => Model.TotalValue)</strong>
+                    </td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+        }
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="AddPago" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h2 class="modal-title"></h2>
+            </div>
+            <div class="modal-body"><div class="te">Please wait...</div></div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("body").on("click", "a.dialog-window", null, function (e) {
+                e.preventDefault();
+                var $link = $(this);
+                var title = $link.text();
+                $('#AddPago .modal-title').html(title);
+                var url = $(this).attr('href');
+                if (url.indexOf('#') == 0) {
+                    $('#AddPago').modal('show');
+                }
+                else {
+                    $.get(url, function (data) {
+                        $('#AddPago .te').html(data);
+                        $('#AddPago').modal();
+                    }).success(function () { $('input:text:visible:first').focus(); });
+
+                }
+            });
+        });
+    </script>
+}
+
+
+
+

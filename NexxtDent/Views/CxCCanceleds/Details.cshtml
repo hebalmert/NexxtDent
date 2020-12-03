@@ -1,0 +1,98 @@
+﻿@model NexxtDent.Models.CxCCanceled
+
+@{
+    ViewBag.Title = @Resources.Resource.ViewDetail;
+}
+
+    <h2>@Resources.Resource.ViewDetail</h2>
+
+<div>
+    <h4>@Resources.Resource.CxC_View_IndexTitulo</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Client.Cliente)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Client.Cliente)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Company.Compania)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Company.Compania)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CxCBill.NotaCobro)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CxCBill.NotaCobro)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Reception.Paciente)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Reception.Paciente)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Sell.NotaCobro)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Sell.NotaCobro)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NotaCobro)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NotaCobro)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Total)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Total)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Abono)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Abono)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Saldo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Saldo)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @*@Html.ActionLink("Edit", "Edit", new { id = Model.CxCCanceledId }) |*@
+    @Html.ActionLink(@Resources.Resource.ButtonBack, "Index")
+</p>

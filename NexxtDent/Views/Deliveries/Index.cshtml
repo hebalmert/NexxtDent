@@ -1,0 +1,94 @@
+﻿@model IEnumerable<NexxtDent.Models.Delivery>
+
+@{
+    ViewBag.Title = @Resources.Resource.Delivery_ViewIndex_Titulo1;
+}
+
+    <h2>@Resources.Resource.Delivery_ViewIndex_Titulo1</h2>
+
+@*<p>
+    @Html.ActionLink("Create New", "Create")
+</p>*@
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Reception.Recepcion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Reception.Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Reception.Client.Cliente)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Reception.Paciente)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TechnicalWork.Servicio)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.State.Estado)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Reception.Recepcion)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Reception.Date)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Reception.Client.Cliente)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Reception.Paciente)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.TechnicalWork.Servicio)
+    </td>
+    <td>
+        @switch (item.StateId)
+        {
+            case 1:
+                <strong style="color : gray">@Html.DisplayFor(model => item.State.Estado)</strong>
+                break;
+
+            case 2:
+                <strong style="color : green">@Html.DisplayFor(model => item.State.Estado)</strong>
+                break;
+
+            case 3:
+                <strong style="color : green">@Html.DisplayFor(model => item.State.Estado)</strong>
+                break;
+            case 4:
+                <strong style="color : green">@Html.DisplayFor(model => item.State.Estado)</strong>
+                break;
+            case 5:
+                <strong style="color : blue">@Html.DisplayFor(model => item.State.Estado)</strong>
+                break;
+            case 6:
+                <strong style="color : blue">@Html.DisplayFor(model => item.State.Estado)</strong>
+                break;
+            case 7:
+                <strong style="color : red">@Html.DisplayFor(model => item.State.Estado)</strong>
+                break;
+            case 8:
+                <strong style="color : green">@Html.DisplayFor(model => item.State.Estado)</strong>
+                break;
+            case 9:
+                <strong style="color : red">@Html.DisplayFor(model => item.State.Estado)</strong>
+                break;
+        }
+    </td>
+    <td>
+        @*@Html.ActionLink("Edit", "Edit", new { id=item.DeliveryId }) |*@
+        @Html.ActionLink(@Resources.Resource.ButtonDetail, "Details", new { id = item.DeliveryId }, new { @class = "btn btn-info" })
+        @*@Html.ActionLink("Delete", "Delete", new { id=item.DeliveryId })*@
+    </td>
+</tr>
+}
+
+</table>

@@ -1,0 +1,123 @@
+﻿@model NexxtDent.Models.User
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<style>
+    .jumbotron1 {
+        background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), url("../Content/ImgCarrusel/banner1.svg");
+        background-size: 100%, 100%;
+        color: white;
+    }
+
+    .jumbotron2 {
+        background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), url("../Content/ImgCarrusel/banner2.svg");
+        background-size: 100%, 100%;
+        color: white;
+    }
+
+    .jumbotron3 {
+        background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), url("../Content/ImgCarrusel/banner3.svg");
+        background-size: 100%, 100%;
+        color: white;
+    }
+</style>
+
+<div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="carousel">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <div class="jumbotron jumbotron1">
+                @if (Model != null && !string.IsNullOrEmpty(Model.Company.Logo))
+                {
+                    <img src="@Url.Content(Model.Company.Logo)" alt="Image" style="width:100px;height:100px;max-width: 100%; height: auto;" />
+                }
+                @if (Model != null)
+                {<h1>@Html.DisplayFor(model => model.Company.Compania)</h1>}
+            else
+            {
+                <img src="~/Content/Imagen/NexxtLink.png" class="card-img-top" alt="Image" style="width:100px;height:100px;max-width: 100%; height: auto;">
+                <h1>Nexxt Link</h1>}
+
+                @if (Model == null)
+                {
+                    <p class="lead">@Resources.Resource.NombreSoftware</p>}
+            </div>
+        </div>
+        <div class="carousel-item">
+            <div class="jumbotron jumbotron2">
+                @if (Model != null && !string.IsNullOrEmpty(Model.Company.Logo))
+                {
+                    <img src="@Url.Content(Model.Company.Logo)" alt="Image" style="width:100px;height:100px;max-width: 100%; height: auto;" />
+                }
+                @if (Model != null)
+                {<h1>@Html.DisplayFor(model => model.Company.Compania)</h1>}
+            else
+            {
+                <img src="~/Content/Imagen/NexxtLink.png" class="card-img-top" alt="Image" style="width:100px;height:100px;max-width: 100%; height: auto;">
+                <h1>Nexxt Link</h1>}
+
+                @if (Model == null)
+                {
+                    <p class="lead">@Resources.Resource.NombreSoftware</p>}
+            </div>
+        </div>
+        <div class="carousel-item">
+            <div class="jumbotron jumbotron2">
+                @if (Model != null && !string.IsNullOrEmpty(Model.Company.Logo))
+                {
+                    <img src="@Url.Content(Model.Company.Logo)" alt="Image" style="width:100px;height:100px;max-width: 100%; height: auto;" />
+                }
+                @if (Model != null)
+                {<h1>@Html.DisplayFor(model => model.Company.Compania)</h1>}
+            else
+            {
+                <img src="~/Content/Imagen/NexxtLink.png" class="card-img-top" alt="Image" style="width:100px;height:100px;max-width: 100%; height: auto;">
+                <h1>Nexxt Link</h1>}
+
+                @if (Model == null)
+                {
+                    <p class="lead">@Resources.Resource.NombreSoftware</p>}
+            </div>
+        </div>
+    </div>
+    @*<a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleFade" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>*@
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading"><h4>@Resources.Resource.Home_IndexTitulo_Trabajos</h4></div>
+            <div class="panel-body">
+                <p>
+                    @Resources.Resource.Home_IndexTexto_Trabajos
+                </p>
+                @*<p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>*@
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading"><h4>@Resources.Resource.Home_IndexTitulo_PagosEgresos</h4></div>
+            <div class="panel-body">
+                <p>@Resources.Resource.Home_IndexText_Pagos</p>
+                @*<p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>*@
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading"><h4>@Resources.Resource.Homo_IndexTitulo_CuentasCobrar</h4></div>
+            <div class="panel-body">
+                <p>@Resources.Resource.Home_IndexText_Pagos</p>
+                @*<p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>*@
+            </div>
+        </div>
+    </div>
+</div>

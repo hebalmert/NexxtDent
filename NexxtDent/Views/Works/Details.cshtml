@@ -1,0 +1,74 @@
+﻿@model NexxtDent.Models.Work
+
+@{
+    ViewBag.Title = @Resources.Resource.ViewDetail;
+}
+
+    <h2>@Resources.Resource.ViewDetail</h2>
+
+<div>
+    <h4>@Resources.Resource.Work_VIewIndex_Titulo1</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.WorkCategory.Categoria)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.WorkCategory.Categoria)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Trabajo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Trabajo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tax.Impuesto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tax.Impuesto)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Precio1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Precio1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Precio2)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Precio2)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Precio3)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Precio3)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Detalle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Detalle)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink(@Resources.Resource.ButtonEdit, "Edit", new { id = Model.WorkId }, new { @class="btn btn-primary"}) |
+    @Html.ActionLink(@Resources.Resource.ButtonBack, "Index", new { }, new { @class="btn btn-success"})
+</p>

@@ -1,0 +1,113 @@
+﻿@model NexxtDent.Models.Client
+
+@{
+    ViewBag.Title = @Resources.Resource.ViewDelete;
+}
+
+    <h2>@Resources.Resource.ViewDelete</h2>
+
+    <h3>@Resources.Resource.MsgDelete</h3>
+<div>
+    <h4>@Resources.Resource.Client_ViewIndex_Titulo1</h4>
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Identification.TipoDocumento)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Identification.TipoDocumento)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cliente)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cliente)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IdentificationNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IdentificationNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Phone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Phone)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Movil)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Movil)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.City.Ciudad)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.City.Ciudad)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Zone.Zona)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Zone.Zona)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LevelPrice.NivelPrecio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LevelPrice.NivelPrecio)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value=@Resources.Resource.ButtonDelete class="btn btn-primary" /> |
+            @Html.ActionLink(@Resources.Resource.ButtonBack, "Index", new { }, new { @class="btn btn-success"})
+        </div>
+    }
+</div>

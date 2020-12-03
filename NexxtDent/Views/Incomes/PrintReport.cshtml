@@ -1,0 +1,79 @@
+﻿@model IEnumerable<NexxtDent.Models.Income>
+
+@{
+    ViewBag.Title = @Resources.Resource.Income_IndexView_Titulo1;
+}
+
+    <h2>@Resources.Resource.Income_IndexView_Titulo1</h2>
+
+<p>
+    @Html.ActionLink(@Resources.Resource.ButtonBack, "Index", new { }, new { @class = "btn btn-success" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Source)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Control)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Detalle)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Monto)
+        </th>
+        <th></th>
+    </tr>
+
+    @{
+        decimal TotalTotal = 0.0M;
+        int registros = 0;
+    }
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Source)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Control)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Detalle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Monto)
+            </td>
+            @{
+                TotalTotal += item.Monto;
+                registros += +1;
+            }
+        </tr>
+    }
+    <tr>
+    </tr>
+    <tr>
+        <td align="center">
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+            <strong>Totales</strong>
+        </td>
+        <td align="right">
+            Registros: @registros
+        </td>
+        <td align="center">
+            Ingresos: @TotalTotal
+        </td>
+    </tr>
+</table>
+

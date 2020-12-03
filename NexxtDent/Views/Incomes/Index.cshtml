@@ -1,0 +1,107 @@
+﻿@*@model IEnumerable<NexxtDent.Models.Income>*@
+
+@model PagedList.IPagedList<NexxtDent.Models.Income>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = @Resources.Resource.Income_IndexView_Titulo1;
+}
+
+<h2>@Resources.Resource.Income_IndexView_Titulo1</h2>
+
+<p>
+    @Html.ActionLink(@Resources.Resource.ButtonNew, "Create", new { }, new { @class = "btn btn-primary" })
+    @Html.ActionLink(@Resources.Resource.ButtonReport, "PrintInComeReport", "Incomes", new { }, new { @class = "dialog-window btn btn-warning" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Source)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Control)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Detalle)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Monto)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Source)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Control)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Detalle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Monto)
+            </td>
+            <td>
+                @Html.ActionLink(@Resources.Resource.ButtonEdit, "Edit", new { id = item.IncomeId }, new { @class = "btn btn-warning" }) |
+                @Html.ActionLink(@Resources.Resource.ButtonDetail, "Details", new { id = item.IncomeId }, new { @class = "btn btn-info" }) |
+                @Html.ActionLink(@Resources.Resource.ButtonDelete, "Delete", new { id = item.IncomeId }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+    }
+
+</table>
+
+<div class="modal fade" id="PrintInComeReport" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h2 class="modal-title"></h2>
+            </div>
+            <div class="modal-body"><div class="te">Please wait...</div></div>
+        </div>
+    </div>
+</div>
+
+Página: @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber), de: @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Index", new
+{
+    page,
+    sortOrder =
+    ViewBag.CurrentSort,
+    currentFilter = ViewBag.CurrentFilter
+}))
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("body").on("click", "a.dialog-window", null, function (e) {
+                e.preventDefault();
+                var $link = $(this);
+                var title = $link.text();
+                $('#PrintInComeReport .modal-title').html(title);
+                var url = $(this).attr('href');
+                if (url.indexOf('#') == 0) {
+                    $('#PrintInComeReport').modal('show');
+                }
+                else {
+                    $.get(url, function (data) {
+                        $('#PrintInComeReport .te').html(data);
+                        $('#PrintInComeReport').modal();
+                    }).success(function () { $('input:text:visible:first').focus(); });
+
+                }
+            });
+        });
+    </script>
+}

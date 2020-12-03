@@ -1,0 +1,135 @@
+﻿@*@model IEnumerable<NexxtDent.Models.TechnicalPay>*@
+
+@model PagedList.IPagedList<NexxtDent.Models.TechnicalPay>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = @Resources.Resource.TechincalPay_ViewIndex_Titulo1;
+}
+
+<h2>@Resources.Resource.TechincalPay_ViewIndex_Titulo1</h2>
+
+@*<p>
+        @Html.ActionLink(@Resources.Resource.ButtonNew, "Create", new { }, new { @class="btn btn-primary"})
+    </p>*@
+<div class="row">
+    <div class="col-md-6">
+        <div>
+            @using (Html.BeginForm())
+            {
+                <p>
+                    <input type="submit" value=@Resources.Resource.ButtonSearch class="btn btn-primary" />
+                </p>
+                <p>
+                    @Html.TextBox("SearchString", null, htmlAttributes: new { @class = "form-control" })
+                </p>
+            }
+        </div>
+    </div>
+    <div class="col-md-6">
+
+    </div>
+</div>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Reception.Recepcion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Technical.FullName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Servicio)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Precio)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Cantidad)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Total)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Abono)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Saldo)
+        </th>
+        <th></th>
+    </tr>
+
+    @{
+        decimal TotalTotal = 0.0M;
+        int registros = 0;
+    }
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Reception.Recepcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Technical.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Servicio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Precio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cantidad)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Total)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Abono)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Saldo)
+            </td>
+            <td>
+                @*@Html.ActionLink("Edit", "Edit", new { id=item.TechnicalPayId }) |*@
+                @Html.ActionLink(@Resources.Resource.ButtonDetail, "Details", new { id = item.TechnicalPayId }, new { @class = "btn btn-info" })
+                @*@Html.ActionLink(@Resources.Resource.ButtonDelete, "Delete", new { id = item.TechnicalPayId }, new { @class = "btn btn-danger" })*@
+            </td>
+            @{
+                TotalTotal += item.Saldo;
+                registros += +1;
+            }
+        </tr>
+    }
+    <tr>
+    </tr>
+    <tr>
+        <td></td>
+
+        <td></td>
+
+        <td></td>
+
+        <td></td>
+
+        <td>
+            <strong>Registros: @registros</strong>
+        </td>
+
+        <td>
+            <strong>Por Pagar: @TotalTotal</strong>
+        </td>
+
+        <td></td>
+    </tr>
+</table>
+
+Página: @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber), de: @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Index", new
+{
+    page,
+    sortOrder =
+    ViewBag.CurrentSort,
+    currentFilter = ViewBag.CurrentFilter
+}))
